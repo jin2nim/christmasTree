@@ -1,10 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import "../css/main.css";
+import "../User/css/main.css";
 
 export default function Navbar({ isLogin, userRole }) {
   const location = useLocation(); // To track the active route
-  const isProfilePage = location.pathname === "/profile"; // Check if current page is profile
+  const isProfilePage = location.pathname === "../User/profile"; // Check if current page is profile
 
   // Close navbar if root is changed for mobile
   useEffect(() => {
