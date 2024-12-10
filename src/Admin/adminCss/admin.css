@@ -1,0 +1,72 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  /* border: solid 1px blue; */
+}
+
+.admin-title {
+  color: #6b6b6b;
+  font-size: 36px;
+  text-align: left;
+  width: 100%;
+}
+
+th {
+  font-size: 16px;
+  font-weight: 600;
+}
+/*********** userlogs page ************/
+
+.log-wrap {
+  margin: 10px;
+  width: 90%;
+}
+
+.searchBar {
+  margin-bottom: 10px;
+  padding: 5px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+  height: 60px;
+}
+.searchBar input {
+  border: none;
+  width: 100%;
+  margin-left: 32px;
+  padding-left: 10px;
+  height: 80%;
+  font-size: 16px;
+}
+
+.searchBtn {
+  background-color: #d83f3f;
+  width: 160px;
+  border-radius: 5px;
+}
+
+.customS {
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  left: 10px;
+  padding-top: 14px;
+}
+
+table {
+  width: 100%;
+  table-layout: fixed;
+  text-align: center;
+}
+table th {
+  width: 20%;
+}
