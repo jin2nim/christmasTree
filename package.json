@@ -40,9 +40,9 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "gh-pages": "^6.2.0",
     "react-router-dom": "^6.28.0"
   },
-  "homepage": "https://jin2nim.github.io/christmasTree"
-
+  "homepage": "/Christmas_final"
 }
