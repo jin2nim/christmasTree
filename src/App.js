@@ -47,16 +47,16 @@ function App() {
           <Route path="/" element={<Master isLogin={loggedInUserId} userRole={userRole} />}>
             {loggedInUserId ? (
               <>
-                 <Route index element={userRole ? <UserList /> : <Home />} />
+                <Route index element={userRole ? <UserList /> : <Home />} />
                 <Route path="play/*" element={<PlayHome />} />
                 <Route path="profile" element={<Profile userId={loggedInUserId} />} />
                 <Route path="logout" element={<Logout onLogout={handleLogout} />} />
                 {userRole && (
                   <>
-                    <Route path="userList" element={<UserList/>}/>
-                    <Route path="userLog" element={<UserLogs/>}/>
-                    <Route path="editItem" element={<EditItem/>}/>
-                    <Route path="editSong" element={<EditSong/>}/>
+                    <Route path="userList" element={<UserList />} />
+                    <Route path="userLog" element={<UserLogs />} />
+                    <Route path="editItem" element={<EditItem />} />
+                    <Route path="editSong" element={<EditSong />} />
                   </>
                 )}
               </>
