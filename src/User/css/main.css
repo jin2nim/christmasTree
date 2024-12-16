@@ -1,0 +1,499 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  /* border: solid 1px blue; */
+}
+body {
+  height: 100vh;
+  background-color: #fce0e0;
+}
+
+.current-page {
+  width: 100%;
+  text-align: center;
+  h1 {
+    color: #d83f3f;
+    font-weight: bold;
+    font-size: 1.25rem;
+  }
+  .profile-title {
+    color: #fff;
+  }
+}
+
+.page-title {
+  text-decoration: none;
+}
+
+/*navigation*/
+#navbarNav {
+  transition: height 0.3s ease, opacity 0.3s ease;
+  background-color: white;
+  border-bottom: 1px solid #ececec;
+}
+.navbar-collapse.collapsing {
+  height: 0;
+}
+
+.navbar-collapse.show {
+  height: auto;
+  opacity: 1;
+}
+
+.navbar-collapse {
+  opacity: 0;
+  height: 0;
+}
+
+.nav-wrap {
+  position: fixed;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  background-color: #fce0e0;
+}
+.navbar {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  width: 100%;
+  position: relative;
+  border-bottom: none;
+  z-index: 101;
+  min-height: 50px;
+}
+.navbar-collapse {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+.navbar-nav {
+  padding: 20px;
+  font-size: 18px;
+  width: 100%;
+  z-index: 100;
+}
+
+.navbar-nav li a {
+  width: 100%;
+  margin-top: 40px;
+}
+.navbar-toggler {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+}
+.navbar-toggler-icon {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+/* contents in Navbar */
+.navbar-collapse {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* background-color: #f2f2f2; */
+  z-index: 2;
+}
+.content-area {
+  padding-top: 50px;
+}
+/*login & register*/
+.loginForm,
+.regForm {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+.loginForm h2,
+.regForm h2 {
+  text-align: center;
+  width: 100%;
+  margin-top: 20px;
+  font-size: 30px;
+  font-weight: bold;
+}
+.loginForm input,
+.regForm input {
+  border-color: #bebebe;
+  width: 325px;
+  height: 80px;
+  border-radius: 30px;
+  margin: 20px auto;
+  display: block;
+}
+
+.loginForm button,
+.regForm button {
+  margin: 50px 20px;
+  background-color: #d83f3f;
+  color: #f2f2f2;
+  width: 325px;
+  height: 80px;
+  border-radius: 30px;
+  border: none;
+  display: block;
+  margin: 10% auto;
+}
+
+.red {
+  color: #d83f3f;
+}
+
+.regForm p {
+  font-size: 12px;
+  text-align: center;
+}
+
+.head-t {
+  color: #d83f3f;
+  font-weight: bold;
+  font-size: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.t-box {
+  margin: 0;
+  padding: 0;
+}
+
+/****** profile **********/
+.profileWrap {
+  background-color: #d83f3f;
+  color: white;
+  transform: translateZ(0);
+  text-align: center;
+  border-bottom-left-radius: 66px;
+  border-bottom-right-radius: 66px;
+  height: 220px;
+  padding-top: 20px;
+}
+.profileWrap h2 {
+  font-size: 20px;
+  padding-bottom: 10px;
+}
+.prof-head {
+  position: relative;
+  z-index: 9;
+  width: 100%;
+  background-color: #d83f3f;
+}
+.prof-t {
+  color: white;
+  font-weight: normal;
+  font-size: 16px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.edit-profile {
+  background-color: #d83f3f;
+  position: absolute;
+  top: -45px;
+  right: 0;
+}
+
+.recent-t {
+  font-size: 15px;
+  font-weight: bold;
+  margin: 25px 20px 0px 20px;
+}
+
+.profile-image {
+  width: 93px;
+  height: 93px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-top: 20px;
+  padding: 5px;
+}
+
+/* modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  text-align: center;
+}
+
+.modal-buttons {
+  margin-top: 10px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  gap: 30px;
+}
+
+.modal-buttons button {
+  width: 90px;
+  margin: 5px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modal-buttons button {
+  background-color: #d83f3f;
+}
+
+.modal input {
+  border-radius: 20px;
+  border: #bebebe 1px solid;
+}
+
+#file-up {
+  display: none;
+}
+
+.up-label {
+  border: none;
+  color: white;
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  margin: 5px;
+  border-radius: 50%;
+  background-color: #3b933c;
+  cursor: pointer;
+  line-height: 60px;
+}
+
+.image-select h3 {
+  margin-top: 10px;
+}
+
+.edit-name:focus {
+  border: 2px solid rgba(65, 65, 65, 0.5);
+  outline: none;
+}
+
+.camera {
+  background-color: transparent;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+/*deco modal*/
+.modal-deco {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+}
+
+.modalContent-deco {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  margin: 15px;
+}
+
+.modal-msg {
+  margin: 10px;
+}
+.confirmButton {
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: #3b933c;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  max-width: 300px;
+}
+/***********************/
+/* DESKTOP（992px以上） */
+@media (min-width: 992px) {
+  .nav-wrap {
+    position: relative;
+    width: 338px;
+  }
+  .navbar-toggler {
+    display: none;
+  }
+
+  .navbar-collapse {
+    display: flex !important;
+    opacity: 1;
+    height: auto;
+    background-color: transparent;
+  }
+
+  .navbar-nav {
+    display: block;
+    padding-top: 50px;
+  }
+
+  .navbar-nav .nav-item {
+    margin-right: 15px;
+    font-size: 20px;
+  }
+
+  .navbar-nav .nav-item:last-child {
+    margin-right: 0;
+  }
+
+  .navbar-nav li a {
+    margin-top: 0;
+  }
+
+  #navbarNav {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 100vh;
+    height: 100%;
+  }
+  .loginForm,
+  .regForm {
+    width: 80%;
+    max-width: 400px;
+    height: calc(100vh - 50px);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .regForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  .prof-t {
+    margin-top: 10px;
+  }
+  .content-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: calc(100vw - 338px);
+    padding-top: 0;
+    position: relative;
+  }
+
+  .modal-content {
+    padding: 20px;
+    width: 80%;
+  }
+  .edit-name {
+    width: 60%;
+    font-size: 20px;
+  }
+  .edit-name-wrap {
+    padding-top: 20px;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .image-select {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+  }
+  .image-options {
+    width: 60%;
+    display: flex;
+    gap: 10px;
+  }
+  .modal-buttons {
+    width: 100%;
+    gap: 10%;
+  }
+
+  .modal-buttons button {
+    width: 20%;
+    font-size: 18px;
+  }
+  .modal h3 {
+    font-size: 20px;
+  }
+
+  .nav-t {
+    font-size: 20px;
+    color: #d83f3f;
+    font-weight: 700;
+    text-wrap: nowrap;
+    margin-bottom: 50%;
+  }
+  .nav-t img {
+    height: 40px;
+  }
+
+  .icon-margin-right {
+    margin-right: 20px;
+  }
+
+  .profileWrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;
+  }
+  .profileWrap h2 {
+    margin: 10px;
+    font-size: 36px;
+  }
+  .profile-image {
+    margin: 10px;
+    padding: 0px;
+  }
+
+  .edit-profile {
+    top: 0px;
+    right: 20px;
+    margin: 10px;
+  }
+
+  .modal-msg {
+    font-size: 20px;
+  }
+}

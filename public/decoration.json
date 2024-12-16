@@ -1,0 +1,156 @@
+[{
+    "id": 1,
+    "deco_name": "ball",
+    "points": 1,
+    "img": "/svg/decoration/ball.svg"
+},{
+    "id": 2,
+    "deco_name": "bells",
+    "points": 2,
+    "img": "/svg/decoration/bells.svg"
+},{
+    "id": 3,
+    "deco_name": "candy",
+    "points": 2,
+    "img": "/svg/decoration/candy.svg"
+},{
+    "id": 4,
+    "deco_name": "gift",
+    "points": 1,
+    "img": "/svg/decoration/gift.svg"
+},{
+    "id": 5,
+    "deco_name": "Ginger",
+    "points": 2,
+    "img": "/svg/decoration/Ginger.svg"
+},{
+    "id": 6,
+    "deco_name": "Nudolph",
+    "points": 1,
+    "img": "/svg/decoration/Nudolph.svg"
+},{
+    "id": 7,
+    "deco_name": "Santa_Hat",
+    "points": 1,
+    "img": "/svg/decoration/Santa_Hat.svg"
+},{
+    "id": 8,
+    "deco_name": "Santa",
+    "points": 2,
+    "img": "/svg/decoration/Santa.svg"
+},{
+    "id": 9,
+    "deco_name": "snowman",
+    "points": 3,
+    "img": "/svg/decoration/snowman.svg"
+},{
+    "id": 10,
+    "deco_name": "socks",
+    "points": 1,
+    "img": "/svg/decoration/socks.svg"
+},{
+    "id": 11,
+    "deco_name": "star",
+    "points": 1,
+    "img": "/svg/decoration/star.svg"
+},{
+    "id": 12,
+    "deco_name": "trineo",
+    "points": 1,
+    "img": "/svg/decoration/trineo.svg"
+},{
+    "id": 13,
+    "deco_name": "King",
+    "points": 1,
+    "img": "/svg/decoration/King.svg"
+},{
+    "id": 14,
+    "deco_name": "candle",
+    "points": 1,
+    "img": "/svg/decoration/candle.svg"
+},{
+    "id": 15,
+    "deco_name": "BellTree",
+    "points": 1,
+    "img": "/svg/decoration/BellTree.svg"
+},{
+    "id": 16,
+    "deco_name": "Baubles",
+    "points": 1,
+    "img": "/svg/decoration/Baubles.svg"
+},{
+    "id": 17,
+    "deco_name": "Moon",
+    "points": 1,
+    "img": "/svg/decoration/Moon.svg"
+},{
+    "id": 18,
+    "deco_name": "Bell2",
+    "points": 1,
+    "img": "/svg/decoration/Bell2.svg"
+},{
+    "id": 19,
+    "deco_name": "Bells2",
+    "points": 1,
+    "img": "/svg/decoration/Bells2.svg"
+},{
+    "id": 20,
+    "deco_name": "wreaths",
+    "points": 1,
+    "img": "/svg/decoration/wreaths.svg"
+},{
+    "id": 21,
+    "deco_name": "socks",
+    "points": 1,
+    "img": "/svg/decoration/sock2.svg"
+},{
+    "id": 22,
+    "deco_name": "socks",
+    "points": 3,
+    "img": "/svg/decoration/Christmas socks.svg"
+},{
+    "id": 23,
+    "deco_name": "Mittens",
+    "points": 2,
+    "img": "/svg/decoration/Mittens.svg"
+},{
+    "id": 24,
+    "deco_name": "Bells",
+    "points": 3,
+    "img": "/svg/decoration/Christmas bells.svg"
+},{
+    "id": 25,
+    "deco_name": "house",
+    "points": 1,
+    "img": "/svg/decoration/Gingerbread house.svg"
+},{
+    "id": 26,
+    "deco_name": "Snowglobe",
+    "points": 3,
+    "img": "/svg/decoration/Snowglobe.svg"
+},{
+    "id": 27,
+    "deco_name": "Stocking",
+    "points": 2,
+    "img": "/svg/decoration/Stocking.svg"
+},{
+    "id": 28,
+    "deco_name": "Snowman",
+    "points": 4,
+    "img": "/svg/decoration/Snowman2.svg"
+},{
+    "id": 29,
+    "deco_name": "Santa",
+    "points": 3,
+    "img": "/svg/decoration/Father Christmas.svg"
+},{
+    "id": 30,
+    "deco_name": "Rudolph",
+    "points": 3,
+    "img": "/svg/decoration/Rudolph the Reindeer.svg"
+},{
+    "id": 31,
+    "deco_name": "Gingerbread",
+    "points": 2,
+    "img": "/svg/decoration/Gingerbread man.svg"
+}]
