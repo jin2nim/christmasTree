@@ -1,0 +1,182 @@
+.editItemContainer {
+  padding: 20px;
+}
+
+input.show {
+  display: block;
+}
+
+label {
+  color: red;
+}
+.upWrap {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.fileBtn::file-selector-button {
+  border: none;
+  background-color: white;
+  padding: 5px;
+  border-radius: 5px;
+  text-align: center;
+  display: block;
+}
+
+#mp4::file-selector-button::after {
+  content: "Add MP4"; /* Text for the MP4 file input */
+}
+
+#songImg::file-selector-button::after {
+  content: "Add Song Image"; /* Text for the Image file input */
+}
+
+.formSection {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid white;
+  align-items: center;
+  padding: 10px;
+  border-radius: 10px;
+
+  input {
+    width: 100%;
+    border: none;
+    padding: 5px 10px;
+    background-color: transparent;
+    border-right: 1px solid white;
+  }
+  input[name="points"] {
+    border-right: none;
+  }
+  input::placeholder {
+    color: red;
+  }
+
+  button {
+    white-space: nowrap;
+    padding: 5px 10px;
+    border: none;
+    background-color: red;
+    color: white;
+    border-radius: 10px;
+  }
+
+  margin: 20px 0 50px;
+}
+
+.itemListSong {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2% 5%;
+  margin: 0;
+  padding: 0;
+
+  .preview {
+    .itemInfo {
+      width: 100%;
+
+      h4 {
+        font-size: 1rem;
+        margin: 0;
+      }
+    }
+  }
+
+  li {
+    padding: 10px;
+    border: 1px solid white;
+    border-radius: 10px;
+    display: flex;
+    width: 30%;
+    margin-bottom: 20px;
+    justify-content: space-between;
+
+    img {
+      max-width: 90px;
+      height: auto;
+    }
+
+    .itemInfo {
+      width: calc(100% - 50px - 55px);
+      padding-left: 10px;
+      p {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+
+      input {
+        width: 100%;
+        border: thin solid #ccc;
+      }
+      input[name="name"] {
+        margin-bottom: 3px;
+      }
+    }
+    .btnArea {
+      display: flex;
+      flex-direction: row;
+      justify-content: left;
+      gap: 5px;
+      max-width: 55px;
+
+      button {
+        border: none;
+        padding: 5px;
+        border-radius: 10px;
+        font-size: 0.875rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .itemList {
+    li {
+      width: 47.5%;
+    }
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .formSection {
+    display: flex;
+    flex-direction: column;
+    border: none;
+    gap: 5px;
+    padding: 0;
+
+    input {
+      width: 100%;
+      border: 1px solid white;
+      border-radius: 10px;
+      background-color: white;
+      border-right: none;
+    }
+    input::placeholder {
+      color: #333;
+    }
+
+    button {
+      width: 100%;
+    }
+
+    margin: 20px 0 20px;
+  }
+
+  .itemList {
+    li {
+      width: 100%;
+      img {
+        max-width: 50px;
+      }
+      .itemInfo {
+        padding-left: 15px;
+        p {
+          font-size: 0.875rem;
+        }
+      }
+    }
+  }
+}

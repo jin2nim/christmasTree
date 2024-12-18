@@ -102,3 +102,18 @@ table th {
 .date-sort label {
   width: 120px;
 }
+/************/
+
+.searchUser input {
+  border: none;
+}
+.searchUser button {
+  border: none;
+  padding: 5px;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  margin-left: 5px;
+}
+.searchUser {
+  margin: 10px;
+}
