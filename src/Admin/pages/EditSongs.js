@@ -25,7 +25,7 @@ export default function EditSongs() {
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const audioRef = useRef(null);
-  const phpUrl = "http://localhost/webdev/test-haru/music.php";
+  const phpUrl = "http://localhost/webdev/test-haru/chritsmasBackend/song.php";
 
   // Fetch songs on component mount
   useEffect(() => {
@@ -182,7 +182,7 @@ export default function EditSongs() {
       formDataToSend.append("img", newItemData.img);
       
       const response = await fetch(
-        "http://localhost/webdev/test-haru/song.php",
+        "http://localhost/webdev/test-haru/chritsmasBackend/song.php",
         {
           method: "POST",
           body: formDataToSend,
@@ -197,7 +197,7 @@ export default function EditSongs() {
         alert(`Error: ${result.message}`);
       }
     } catch (error) {
-      console.error("Error during fetch or parsing:", error);
+      console.error("a", error);
     }
   };
 
@@ -263,10 +263,14 @@ export default function EditSongs() {
           <ul className="itemListSong">
             {filteredSongs.map((song) => (
               <li key={song.id} className="item">
-                <img
-                  src={`${process.env.PUBLIC_URL}/${song.img}`}
-                  alt={song.name}
-                />
+<img
+            src={
+              song.img.startsWith("http") // backend url
+                ? song.img
+                : `${process.env.PUBLIC_URL}/${song.img}` // front end
+            }
+            alt={song.name}
+          />
                 <div className="itemInfo">
                   {editingSong === song.id ? (
                     <>
