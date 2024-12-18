@@ -53,7 +53,7 @@ export default function Audio({ src, duration }) {
   };
 
   const handleSongEnd = () => {
-    // When music end, user get 
+    // When music end, user get
     const newPoints = points + 2;
     setShowModal(true);
     setPoints(newPoints);
@@ -117,7 +117,5 @@ export default function Audio({ src, duration }) {
       }
 
     </div>
-
-
   );
 };
