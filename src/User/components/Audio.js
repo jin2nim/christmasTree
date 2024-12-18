@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-export default function Audio({src, duration}){
+export default function Audio({ src, duration }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [points, setPoints] = useState(0);  // point state
-  const [currentTime, setCurrentTime] =useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const audioRef = useRef(null);
 
@@ -38,7 +38,7 @@ export default function Audio({src, duration}){
   };
 
   const handleTimeUpdate = () => {
-    if(audioRef.current){
+    if (audioRef.current) {
       const currentProgress = (audioRef.current.currentTime / audioRef.current.duration) * 100;
       setCurrentTime(audioRef.current.currentTime);
       setProgress(currentProgress);
@@ -47,8 +47,8 @@ export default function Audio({src, duration}){
 
   const handleProgressChange = (e) => {
     const newTime = (e.target.value / 100) * audioRef.current.duration;
-    if(audioRef.current){
-        audioRef.current.currentTime = newTime;
+    if (audioRef.current) {
+      audioRef.current.currentTime = newTime;
     }
   };
 
@@ -57,11 +57,11 @@ export default function Audio({src, duration}){
     const newPoints = points + 2;
     setShowModal(true);
     setPoints(newPoints);
-    if(!localStorage.getItem){
+    if (!localStorage.getItem) {
       localStorage.setItem('points', newPoints);  // localStorage에 포인트 저장
     }
     else {
-      localStorage.setItem('points',Number(localStorage.getItem('points'))+2);
+      localStorage.setItem('points', Number(localStorage.getItem('points')) + 2);
     }
   };
   const formatTime = (seconds) => {
@@ -83,13 +83,13 @@ export default function Audio({src, duration}){
           className="audio-progress"
         />
       </div>
-      <div style={{marginBottom:'28px',display:'flex',justifyContent:'space-between',width:'100%'}}>
+      <div style={{ marginBottom: '28px', display: 'flex', justifyContent: 'space-between', width: '100%' }}>
         <p>{formatTime(currentTime)}</p>
         <p>{formatTime(duration)}</p>
       </div>
-        <a onClick={handlePlayPause} style={{marginBottom:'28px'}}>
-          {isPlaying ? <img src={`${process.env.PUBLIC_URL}/svg/StopBtn.svg`}/> : <img src={`${process.env.PUBLIC_URL}/svg/playBtn.svg`}/>}
-        </a>
+      <a onClick={handlePlayPause} style={{ marginBottom: '28px' }}>
+        {isPlaying ? <img src={`${process.env.PUBLIC_URL}/svg/StopBtn.svg`} alt='MERRY CHRISTMAS' /> : <img src={`${process.env.PUBLIC_URL}/svg/playBtn.svg`} alt='MERRY CHRISTMAS' />}
+      </a>
       <audio ref={audioRef} src={src} />
       {
 
@@ -104,7 +104,7 @@ export default function Audio({src, duration}){
           <div className="modal-dialog modal-dialog-centered" role="document">
             <div className="modal-content">
               <div className="modal-body">
-                  You got 2 points. Your Total point is {points}.
+                You got 2 points. Your Total point is {points}.
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" onClick={handleClose}>
@@ -117,7 +117,7 @@ export default function Audio({src, duration}){
       }
 
     </div>
-    
-    
+
+
   );
 };

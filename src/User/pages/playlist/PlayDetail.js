@@ -19,22 +19,22 @@ export default function PlayDetail() {
   useEffect(() => {
     axios.get(`${process.env.PUBLIC_URL}/music.json`)
       .then((response) => {
-        const data = response.data; 
+        const data = response.data;
         const foundMusic = data.find((item) => item.id === Number(id));
         setMusic(foundMusic);
       })
       .catch((error) => {
-        console.error("Error ", error); 
+        console.error("Error ", error);
       });
-    
+
   }, [id]);
-//to show recent play in profile page//
+  //to show recent play in profile page//
   useEffect(() => {
     if (music) {
       addRecentPlay(music);
     }
   }, [music]);
-///////////////////////
+  ///////////////////////
   if (!music) {
     return <div>Loading...</div>;
   }
@@ -46,7 +46,7 @@ export default function PlayDetail() {
           to="/play/"
           className="link"
         >
-          <img src={`${process.env.PUBLIC_URL}/svg/leftArrow.svg`} />
+          <img src={`${process.env.PUBLIC_URL}/svg/leftArrow.svg`} alt="MERRY CHRISTMAS" />
         </Link>
         <span>Now Playing</span>
         <span></span>
@@ -55,16 +55,17 @@ export default function PlayDetail() {
         <div>
           <img
             src={`${process.env.PUBLIC_URL}/${music.img}`}
-            style={{width:'100%', height:'370px', borderRadius: "30px", objectFit:'cover'}}
-          /> 
+            style={{ width: '100%', height: '370px', borderRadius: "30px", objectFit: 'cover' }}
+            alt="MERRY CHRISTMAS"
+          />
         </div>
         <div>
           <div>
-          <h1>{music.name}</h1>
+            <h1>{music.name}</h1>
           </div>
           <p>{music.artist}</p>
         </div>
-        <Audio src={`${process.env.PUBLIC_URL}/${music.src}`} duration={music.duration}/>
+        <Audio src={`${process.env.PUBLIC_URL}/${music.src}`} duration={music.duration} />
       </div>
     </div>
   );
