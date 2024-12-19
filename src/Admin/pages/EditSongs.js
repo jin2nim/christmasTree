@@ -8,14 +8,14 @@ export default function EditSongs() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [formData, setFormData] = useState({
     id: null,
-    song_name: "",
+    name: "",
     artist: "",
     duration: "",
     src: "",
     img: "",
   });
   const [newItemData, setNewItemData] = useState({
-    song_name: "",
+    name: "",
     artist: "",
     duration: "",
     src: "",
@@ -138,7 +138,7 @@ export default function EditSongs() {
     setLoading(true);
     try {
       const data = new FormData();
-      data.append("song_name", formData.name);
+      data.append("name", formData.name);
       data.append("artist", formData.artist);
       data.append("duration", formData.duration);
       data.append("src", formData.src);
@@ -175,7 +175,7 @@ export default function EditSongs() {
   const handleAddItem = async () => {
     try {
       const formDataToSend = new FormData();
-      formDataToSend.append("song_name", newItemData.name);
+      formDataToSend.append("name", newItemData.name);
       formDataToSend.append("artist", newItemData.artist);
       formDataToSend.append("duration", newItemData.duration);
       formDataToSend.append("src", file);
@@ -276,7 +276,7 @@ export default function EditSongs() {
                     <>
                       <input
                         type="text"
-                        name="song_name"
+                        name="name"
                         value={formData.name}
                         onChange={handleInputChange}
                         placeholder="Song Name"
