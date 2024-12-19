@@ -1,11 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../adminCss/editSong.css";
 
+const baseUrl = "http://localhost:3000/christmasTree/";//your frontend
+
 export default function EditSongs() {
   const [songs, setSongs] = useState([]);
   const [editingSong, setEditingSong] = useState(null);
   const [currentSong, setCurrentSong] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
+
+
   const [formData, setFormData] = useState({
     id: null,
     name: "",
@@ -25,7 +29,7 @@ export default function EditSongs() {
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const audioRef = useRef(null);
-  const phpUrl = "http://localhost/webdev/test-haru/chritsmasBackend/song.php";
+  const phpUrl = "http://localhost/webdev/test-haru/chritsmasBackend/song.php";//your php
 
   // Fetch songs on component mount
   useEffect(() => {
@@ -41,7 +45,8 @@ export default function EditSongs() {
     setFormData((prev) => ({ ...prev, [name]: value }));
     setNewItemData((prev) => ({ ...prev, [name]: value })); // Update newItemData too
   };
-
+console.log(formData);
+console.log(newItemData);
   // Handle file change for music and image
   const handleFileChange = (e, type) => {
     if (type === "music") {
@@ -109,59 +114,39 @@ export default function EditSongs() {
   };
 
   // Play song
-  const handlePlaySong = (src) => {
+  const handlePlaySong = (song) => {
     if (audioRef.current) {
-      if (currentSong === src && isPlaying) {
+      if (currentSong === song.src && isPlaying) {
+        // Pause the song if it's already playing
         audioRef.current.pause();
         setIsPlaying(false);
       } else {
-        setCurrentSong(src);
-        audioRef.current.src = `${phpUrl}/${encodeURIComponent(src)}`; // Ensure the correct path
+        // Set the new song source
+        if (currentSong !== song.src) {
+          setCurrentSong(song.src);
+  
+          // Adjust the song URL based on the src format
+          let songUrl = "";
+          if (song.src.startsWith("/Music")) {
+            // Use the src as is
+            songUrl = `${baseUrl}${song.src.substring(1)}`;
+          } else if (song.src.startsWith("Music")) {
+            // the file is in the backend folder please change it to your directory
+            songUrl = `http://localhost/webdev/test-haru/chritsmasBackend/${song.src}`;//your backend
+          } else {
+            // Fallback to default handling
+            songUrl = `${baseUrl}${song.src}`;
+          }
+  
+          audioRef.current.src = songUrl;
+          audioRef.current.load();
+        }
         audioRef.current.play();
         setIsPlaying(true);
       }
     }
-  };
-
-  // Stop song
-  const handleStopSong = () => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-      setCurrentSong(null);
-      setIsPlaying(false);
-    }
-  };
-
-  // Handle song upload
-  const handleSubmit = async () => {
-    setLoading(true);
-    try {
-      const data = new FormData();
-      data.append("name", formData.name);
-      data.append("artist", formData.artist);
-      data.append("duration", formData.duration);
-      data.append("src", formData.src);
-      data.append("img", formData.img);
-
-      const response = await fetch(`${phpUrl}-upload.php`, {
-        method: "POST",
-        body: data,
-      });
-
-      const result = await response.json();
-      if (result.status === "success") {
-        alert("Song uploaded successfully!");
-        setSongs((prev) => [...prev, result.newSong]); // Update songs without reload
-      } else {
-        alert("Failed to upload song");
-      }
-    } catch (error) {
-      console.error("Error uploading song:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    //console.log(audioRef.current.src);
+  }; 
 
   // Filter songs based on search query
   const filteredSongs = songs.filter((song) => {
@@ -182,7 +167,7 @@ export default function EditSongs() {
       formDataToSend.append("img", newItemData.img);
       
       const response = await fetch(
-        "http://localhost/webdev/test-haru/chritsmasBackend/song.php",
+        "http://localhost/webdev/test-haru/chritsmasBackend/song.php",//
         {
           method: "POST",
           body: formDataToSend,
@@ -204,6 +189,7 @@ export default function EditSongs() {
   return (
     <div className="editItemContainer">
       <h1>Music List</h1>
+      <audio ref={audioRef} src=""/>
       <div className="formSection">
         <input
           placeholder="Search by Song or Artist"
@@ -256,6 +242,7 @@ export default function EditSongs() {
     onChange={handleInputChange}
   />
   <button onClick={handleAddItem}>Add Song</button>
+  <p className="fail"></p>
 </div>
 
       <div className="itemSection">
@@ -265,8 +252,8 @@ export default function EditSongs() {
               <li key={song.id} className="item">
 <img
             src={
-              song.img.startsWith("http") // backend url
-                ? song.img
+              song.img.startsWith("Music") ///////////// backend url
+                ? `http://localhost/webdev/test-haru/chritsmasBackend/${song.img}`
                 : `${process.env.PUBLIC_URL}/${song.img}` // front end
             }
             alt={song.name}
@@ -309,9 +296,10 @@ export default function EditSongs() {
                       <p>Title: {song.name}</p>
                       <p>Artist: {song.artist}</p>
                       <p>Duration: {song.duration}</p>
-                      <div className="btnArea">
-                        <button onClick={() => handleEdit(song)}>Edit</button>
-                        <button onClick={() => handleDelete(song.id)}>Delete</button>
+                      <div className="btnArea d-flex flex-column">
+                        <button onClick={() => handlePlaySong(song)}>Play</button>
+                        <div className="d-flex"><button onClick={() => handleEdit(song)}>Edit</button>
+                        <button onClick={() => handleDelete(song.id)}>Delete</button></div>
                       </div>
                     </>
                   )}
