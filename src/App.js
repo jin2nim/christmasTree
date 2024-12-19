@@ -17,26 +17,27 @@ import "./User/css/main.css";
 import { useEffect, useState } from "react";
 
 function App() {
-  const [loggedInUserId, setLoggedInUserId] = useState(localStorage.getItem("loggedInUserId"));
+  const [loggedInUserId, setLoggedInUserId] = useState(sessionStorage.getItem("loggedInUserId"));
   const [userRole, setUserRole] = useState(null);
 
   useEffect(() => {
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
-    const loggedInUser = users.find(user => user.id === Number(loggedInUserId));
-
-    if (loggedInUser) {
-      setUserRole(loggedInUser.admin);  // Set the user role based on the logged-in user
+    const storedRole = sessionStorage.getItem("userRole");
+    if (storedRole) {
+      setUserRole(storedRole);
     }
   }, [loggedInUserId]);
 
-  const handleLogin = (userId) => {
+  const handleLogin = (userId, role) => {
     setLoggedInUserId(userId);
-    localStorage.setItem("loggedInUserId", userId); // Store login
+    setUserRole(role);
+    sessionStorage.setItem("loggedInUserId", userId);
+    sessionStorage.setItem("userRole", role);
   };
 
   const handleLogout = () => {
     setLoggedInUserId(null);
-    localStorage.removeItem("loggedInUserId"); // Delete login
+    setUserRole(null);
+    sessionStorage.clear();
   };
 
   return (
@@ -47,16 +48,19 @@ function App() {
           <Route path="/" element={<Master isLogin={loggedInUserId} userRole={userRole} />}>
             {loggedInUserId ? (
               <>
-                 <Route index element={userRole ? <UserList /> : <Home />} />
+                <Route
+                  index
+                  element={userRole === "admin" ? <Navigate to="/userList" replace /> : <Home />}
+                />
                 <Route path="play/*" element={<PlayHome />} />
                 <Route path="profile" element={<Profile userId={loggedInUserId} />} />
                 <Route path="logout" element={<Logout onLogout={handleLogout} />} />
-                {userRole && (
+                {userRole === "admin" && (
                   <>
-                    <Route path="userList" element={<UserList/>}/>
-                    <Route path="userLog" element={<UserLogs/>}/>
-                    <Route path="editItem" element={<EditItem/>}/>
-                    <Route path="editSong" element={<EditSong/>}/>
+                    <Route path="userList" element={<UserList />} />
+                    <Route path="userLog" element={<UserLogs />} />
+                    <Route path="editItem" element={<EditItem />} />
+                    <Route path="editSong" element={<EditSong />} />
                   </>
                 )}
               </>

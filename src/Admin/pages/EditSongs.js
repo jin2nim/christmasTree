@@ -1,94 +1,316 @@
-import React, { useState, useEffect } from "react";
-import "../adminCss/editItem.css";
+import React, { useState, useEffect, useRef } from "react";
+import "../adminCss/editSong.css";
 
 export default function EditSongs() {
-  const [decorations, setDecorations] = useState([]);
+  const [songs, setSongs] = useState([]);
+  const [editingSong, setEditingSong] = useState(null);
+  const [currentSong, setCurrentSong] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
-    description: ''
+    id: null,
+    song_name: "",
+    artist: "",
+    duration: "",
+    src: "",
+    img: "",
   });
+  const [newItemData, setNewItemData] = useState({
+    song_name: "",
+    artist: "",
+    duration: "",
+    src: "",
+    img: "",
+  });
+  const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const audioRef = useRef(null);
+  const phpUrl = "http://localhost:8080/web-dev-study/Final_Project/Back-end/song.php";
 
+  // Fetch songs on component mount
   useEffect(() => {
-    fetch("http://localhost:8080/web-dev-study/Final_Project/Back-end/music.php")
-      .then(response => response.json())
-      .then(data => setDecorations(data))
-      .catch(error => console.error("Error fetching data:", error));
+    fetch(phpUrl)
+      .then((response) => response.json())
+      .then((data) => setSongs(data))
+      .catch((error) => console.error("Error fetching data: ", error));
   }, []);
 
+  // Handle input change
   const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setNewItemData((prev) => ({ ...prev, [name]: value })); // Update newItemData too
   };
 
-  const handleAddItem = async () => {
-    const response = await fetch(
-      "http://localhost:8080/web-dev-study/Final_Project/Back-end/music.php",
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      }
-    );
-
-    const result = await response.json();
-    if (result.status === 'success') {
-      alert("Added successfully");
-      window.location.reload();
-    } else {
-      alert("Error while adding");
+  // Handle file change for music and image
+  const handleFileChange = (e, type) => {
+    if (type === "music") {
+      setFile(e.target.files[0]);
+    } else if (type === "image") {
+      setNewItemData((prev) => ({ ...prev, img: e.target.files[0] }));
     }
   };
 
-  const handleDelete = async (id) => {
-    const response = await fetch(
-      `http://localhost:8080/web-dev-study/Final_Project/Back-end/DeleteDecoration.php?id=${id}`,
-      { method: 'DELETE' }
-    );
+  // Handle editing a song
+  const handleEdit = (song) => {
+    setEditingSong(song.id);
+    setFormData(song);
+  };
 
-    if (response.ok) {
-      alert('Deleted successfully');
-      window.location.reload();
-    } else {
-      alert('Error');
+  // Save changes to a song
+  const handleSave = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(phpUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+      if (result.status === "update success") {
+        alert("Updated successfully!");
+        setSongs((prev) =>
+          prev.map((song) => (song.id === formData.id ? formData : song))
+        );
+        setEditingSong(null);
+      } else {
+        alert("Failed to update");
+      }
+    } catch (error) {
+      console.error("Error updating song:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Handle deleting a song
+  const handleDelete = async (id) => {
+    setLoading(true);
+    try {
+      const response = await fetch(phpUrl, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+
+      const result = await response.json();
+      if (result.status === "delete success") {
+        alert("Deleted successfully!");
+        setSongs((prev) => prev.filter((song) => song.id !== id));
+      } else {
+        alert("Failed to delete");
+      }
+    } catch (error) {
+      console.error("Error deleting song:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Play song
+  const handlePlaySong = (src) => {
+    if (audioRef.current) {
+      if (currentSong === src && isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        setCurrentSong(src);
+        audioRef.current.src = `${phpUrl}/${encodeURIComponent(src)}`; // Ensure the correct path
+        audioRef.current.play();
+        setIsPlaying(true);
+      }
+    }
+  };
+
+  // Stop song
+  const handleStopSong = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      setCurrentSong(null);
+      setIsPlaying(false);
+    }
+  };
+
+  // Handle song upload
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      const data = new FormData();
+      data.append("song_name", formData.name);
+      data.append("artist", formData.artist);
+      data.append("duration", formData.duration);
+      data.append("src", formData.src);
+      data.append("img", formData.img);
+
+      const response = await fetch(`${phpUrl}-upload.php`, {
+        method: "POST",
+        body: data,
+      });
+
+      const result = await response.json();
+      if (result.status === "success") {
+        alert("Song uploaded successfully!");
+        setSongs((prev) => [...prev, result.newSong]); // Update songs without reload
+      } else {
+        alert("Failed to upload song");
+      }
+    } catch (error) {
+      console.error("Error uploading song:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Filter songs based on search query
+  const filteredSongs = songs.filter((song) => {
+    // Ensure the song.name and song.artist are defined before calling toLowerCase
+    const songName = song.name ? song.name.toLowerCase() : '';
+    const artistName = song.artist ? song.artist.toLowerCase() : '';
+    return songName.includes(searchQuery.toLowerCase()) || artistName.includes(searchQuery.toLowerCase());
+  });
+
+  // Handle adding a new item (song)
+  const handleAddItem = async () => {
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append("song_name", newItemData.name);
+      formDataToSend.append("artist", newItemData.artist);
+      formDataToSend.append("duration", newItemData.duration);
+      formDataToSend.append("src", file);
+      formDataToSend.append("img", newItemData.img);
+      
+      const response = await fetch(
+        "http://localhost/webdev/test-haru/song.php",
+        {
+          method: "POST",
+          body: formDataToSend,
+        }
+      );
+
+      const result = await response.json();
+      if (result.status === "insert success") {
+        alert("Item added successfully");
+        setSongs((prev) => [...prev, result.newItem]); // Update state without reload
+      } else {
+        alert(`Error: ${result.message}`);
+      }
+    } catch (error) {
+      console.error("Error during fetch or parsing:", error);
     }
   };
 
   return (
     <div className="editItemContainer">
-      <h1>Edit Items</h1>
-      {/* 팝업으로 만들거나 이미지 선택하면 이미지 이름을 경로로 지정하도록 만들어볼 것! id는 Auto */}
+      <h1>Music List</h1>
       <div className="formSection">
-        <input type="file" accept="image/*"/>
         <input
-          name="name"
-          placeholder="Write the Name"
-          onChange={handleInputChange}
+          placeholder="Search by Song or Artist"
+          className="form-control"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <input
-          name="Points"
-          placeholder="Write the Point"
-          onChange={handleInputChange}
-        />
-        <button onClick={handleAddItem}>Add Item</button>
       </div>
+
+      <div className="formSection">
+      <div className="d-flex col-2 upWrap">
+        <label for="mp3">Upload mp3</label>
+        <input
+            type="file"
+            onChange={(e) => handleFileChange(e, "music")}
+            placeholder="src"
+            className="show fileBtn"
+            id="mp3"
+        />
+        </div>
+        <div className="d-flex col-2 upWrap">
+        <label for="songImg">Upload image</label>
+        <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => handleFileChange(e, "image")}
+            placeholder="img"
+            className="show fileBtn"
+            id="songImg"
+        />
+        </div>
+  <input
+    name="name"
+    placeholder="Song Title"
+    value={newItemData.name}
+    onChange={handleInputChange}
+  />
+  <input
+    name="artist"
+    placeholder="Artist"
+    type="text"
+    value={newItemData.artist}
+    onChange={handleInputChange}
+  />
+  <input
+    name="duration"
+    placeholder="Duration"
+    type="number"
+    value={newItemData.duration}
+    onChange={handleInputChange}
+  />
+  <button onClick={handleAddItem}>Add Song</button>
+</div>
+
       <div className="itemSection">
-        <h2>Item List</h2>
-        {decorations.length > 0 ? (
-          <ul className="itemList">
-            {decorations.map(item => (
-              <li key={item.id}>
-                <img src={`${process.env.PUBLIC_URL}/${item.img}`} alt={item.deco_name} />
+        {filteredSongs.length > 0 ? (
+          <ul className="itemListSong">
+            {filteredSongs.map((song) => (
+              <li key={song.id} className="item">
+                <img
+                  src={`${process.env.PUBLIC_URL}/${song.img}`}
+                  alt={song.name}
+                />
                 <div className="itemInfo">
-                    <p>Index : {item.id}</p>
-                    <p>Name : {item.name}</p>
-                    <p>Artist : {item.artist}</p>
-                    <p>Duration : {item.duration}</p>
-                </div>
-                <div className="btnArea">
-                    <button className="editBtn" onClick={() => handleDelete(item.id)}>Edit</button>
-                    <button className="deleteBtn" onClick={() => handleDelete(item.id)}>Delete</button>
+                  {editingSong === song.id ? (
+                    <>
+                      <input
+                        type="text"
+                        name="song_name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        placeholder="Song Name"
+                      />
+                      <input
+                        type="text"
+                        name="artist"
+                        value={formData.artist}
+                        onChange={handleInputChange}
+                        placeholder="Artist"
+                      />
+                      <input
+                        type="text"
+                        name="duration"
+                        value={formData.duration}
+                        onChange={handleInputChange}
+                        placeholder="Duration"
+                      />
+                      <input
+                        type="file"
+                        name="img"
+                        onChange={(e) => handleFileChange(e, "image")}
+                      />
+                      <button onClick={handleSave}>Save</button>
+                      <button onClick={() => setEditingSong(null)}>Cancel</button>
+                    </>
+                  ) : (
+                    <>
+                      <p>Index: {song.id}</p>
+                      <p>Title: {song.name}</p>
+                      <p>Artist: {song.artist}</p>
+                      <p>Duration: {song.duration}</p>
+                      <div className="btnArea">
+                        <button onClick={() => handleEdit(song)}>Edit</button>
+                        <button onClick={() => handleDelete(song.id)}>Delete</button>
+                      </div>
+                    </>
+                  )}
                 </div>
               </li>
             ))}

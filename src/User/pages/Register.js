@@ -8,8 +8,9 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const response = await fetch("http://localhost:8080/web-dev-study/Final_Project/Back-end/Register.php", { // 언니 PHP 백엔드 파일 위치 적기기
+      const response = await fetch("http://localhost:8080/web-dev-study/Final_Project/Back-end/Register.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -17,11 +18,17 @@ const Register = () => {
         body: JSON.stringify(formData),
       });
 
-      // 응답 확인 부분인데 이 부분은 디비 확인되면 굳이 필요하지는 않을 것 같아! 그냥 편의상!
+      // PHP 응답이 비어있는 경우 대비
       const text = await response.text();
       console.log("Raw Response:", text);
 
-      const result = JSON.parse(text); // JSON으로 변환
+      let result;
+      try {
+        result = JSON.parse(text);
+      } catch (e) {
+        throw new Error("Invalid JSON response from server");
+      }
+
       if (result.status === "success") {
         setMessage("Registration successful!");
         setTimeout(() => navigate("/login"), 2000);
@@ -32,7 +39,7 @@ const Register = () => {
       setMessage("An error occurred. Please try again.");
       console.error("Error:", error);
     }
-  }; //
+  };
 
   const handleChange = (e) => {
     setFormData({

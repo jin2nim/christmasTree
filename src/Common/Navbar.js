@@ -59,7 +59,7 @@ export default function Navbar({ isLogin, userRole }) {
               {/* Check if logged in or not */}
               {isLogin ? (
                 <>
-                  {userRole ? (  // Admin menu
+                  {userRole === "admin" ? (  // Admin menu
                   <>
                     <li className={`nav-item ${currentDisplay("/userList") ? "active" : ""}`}>
                       <Link className="nav-link" to="/userList" aria-current="page">

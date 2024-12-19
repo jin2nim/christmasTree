@@ -42,7 +42,7 @@ function Profile({ userId }) {
         if (loggedInUser) {
           setUserName(loggedInUser.name || "Default User");
           const savedProfileImage =
-          // remove the url location "${process.env.PUBLIC_URL}"
+            // remove the url location "${process.env.PUBLIC_URL}"
             loggedInUser.profileImage || `/ProfileImgs/santa-user.webp`;
           setProfileImage(savedProfileImage);
           setNewUserName(loggedInUser.name || "Default User");
@@ -67,29 +67,29 @@ function Profile({ userId }) {
     const users = JSON.parse(localStorage.getItem("users")) || [];
     const updatedUsers = users.map(user =>
       String(user.id) === String(userId)
-        ? { 
-            ...user, 
-            name: newUserName, 
-            profileImage: newProfileImage || profileImage // to maintain current image
-          }
+        ? {
+          ...user,
+          name: newUserName,
+          profileImage: newProfileImage || profileImage // to maintain current image
+        }
         : user
     );
-  
+
     // update localstrage
     localStorage.setItem("users", JSON.stringify(updatedUsers));
     localStorage.setItem("profileImage", newProfileImage || profileImage);
-  
+
     // update
     setUserName(newUserName);
     setProfileImage(newProfileImage || profileImage);
-  
+
     // close modal
     setIsModalOpen(false);
-  
+
     console.log("Saved profile image:", newProfileImage || profileImage);
   };
-  
-  
+
+
   const handleCancelClick = () => {
     setNewUserName(userName);
     setNewProfileImage(profileImage);
@@ -162,11 +162,11 @@ function Profile({ userId }) {
 
       {isModalOpen && (
         <div className="modal"
-        onClick={(e)=>{
-          if(e.target.className==="modal"){
-            setIsModalOpen(false);//when click outside of modal, close modal
-          }
-        }}>
+          onClick={(e) => {
+            if (e.target.className === "modal") {
+              setIsModalOpen(false);//when click outside of modal, close modal
+            }
+          }}>
           <div className="modal-content">
             <div className="edit-name-wrap">
               <h3>Edit User Name</h3>
@@ -203,7 +203,7 @@ function Profile({ userId }) {
                 ))}
 
                 <div>
-                  <label for="file-up" className="up-label">
+                  <label htmlFor="file-up" className="up-label">
                     +
                   </label>
                   <input
